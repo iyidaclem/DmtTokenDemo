@@ -1,0 +1,9 @@
+.buydmt{
+    position:fixed;
+    top:5%;
+    right:10px;
+    color: white !important;
+    background-color: orangered;
+    font-weight: bold!important;
+}
+
