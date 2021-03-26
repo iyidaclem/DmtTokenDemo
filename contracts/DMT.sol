@@ -12,8 +12,10 @@ contract DMT {
     uint256 public tokenPrice = 1000000000000000;
     uint256 public tokensSold;
     
+    
     mapping(address => uint256) public balances;
     mapping(address=>mapping(address=>uint256)) public allowance;
+    
     
     //Constructor
     //owner is the address that deployed the contract
@@ -23,12 +25,14 @@ contract DMT {
         balances[msg.sender] = totalSupply;
     }
     
+    
     // events
     event Transfer(
         address indexed _from, 
         address indexed _to, 
         uint256 _value 
         );
+        
         
     //approval
     event Approval(
@@ -43,7 +47,7 @@ contract DMT {
     
     //buyTokens
     function buyTokens(uint256 _numberOfTokens) public payable returns(bool) {
-        require(msg.value == tokenPrice*_numberOfTokens);
+        // require(msg.value == tokenPrice*_numberOfTokens);
         require(balanceOf(owner) >= _numberOfTokens);
        
        balances[owner]-=_numberOfTokens;
