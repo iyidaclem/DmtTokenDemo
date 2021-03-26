@@ -10,7 +10,7 @@ App = {
         window.connected_account = connected_account[0]
         balance = await window.contract.methods.balanceOf("" + connected_account).call();
         tokenName = await window.contract.methods.name().call();
-        totalSupply = await window.contract.methods.totalSupply().call() / 1000000000000000000;
+        totalSupply = await window.contract.methods.totalSupply().call() ;
         symbol = await window.contract.methods.symbol().call();
 
         $('#yourAddress').html(connected_account);
@@ -112,6 +112,44 @@ App = {
                 {
                     "inputs": [
                         {
+                            "internalType": "uint256",
+                            "name": "_numberOfTokens",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "buyTokens",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "_buyer",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "uint256",
+                            "name": "_amount",
+                            "type": "uint256"
+                        }
+                    ],
+                    "name": "Sell",
+                    "type": "event"
+                },
+                {
+                    "inputs": [
+                        {
                             "internalType": "address",
                             "name": "_to",
                             "type": "address"
@@ -185,6 +223,19 @@ App = {
                         }
                     ],
                     "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "admin",
+                    "outputs": [
+                        {
+                            "internalType": "address",
+                            "name": "",
+                            "type": "address"
+                        }
+                    ],
+                    "stateMutability": "view",
                     "type": "function"
                 },
                 {
@@ -303,6 +354,32 @@ App = {
                 },
                 {
                     "inputs": [],
+                    "name": "tokenPrice",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
+                    "name": "tokensSold",
+                    "outputs": [
+                        {
+                            "internalType": "uint256",
+                            "name": "",
+                            "type": "uint256"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [],
                     "name": "totalSupply",
                     "outputs": [
                         {
@@ -315,7 +392,7 @@ App = {
                     "type": "function"
                 }
             ],
-            '0xDc7535aC3F5e50D1A592Ee03e6288678C297Ce31'
+            '0x1D8bD596b2E32354B405a0dF8ec0ae5d681758B1'
         )
     },
 
@@ -349,7 +426,39 @@ App = {
             });
 
         }, 2000);
-    }
+    },
+
+    buyToken: async function () {
+       
+        qty = $("#buyTokenAmount").val();
+        address = window.connected_account;
+        if (qty <= 0 ) {
+            $("#buyTokenError").html("<br><div class='alert alert-danger'>Enter a valid amount <div/>");
+            setTimeout(function(){$("#buyTokenError").html("");},2000)
+        }else{
+            $("#buyTokenError").html("<br><div class='alert alert-info'>Processing... <div/>");
+            $("#buyTokenBtn").attr("disabled",true);
+            status = true;
+            
+            window.contract.methods.buyTokens(qty).send({from: ""+address}).then(function(e){
+               
+                if(e){
+                    $("#buyTokenError").html("<br><div class='alert alert-success'>Success! <div/>");
+                    $("#buyTokenBtn").attr("disabled",false);
+                    $("#buyTokenAmount").val("");
+                    location.reload();
+                    
+                }
+                else{
+                    $("#buyTokenError").html("<br><div class='alert alert-danger'>Failed! <div/>");
+                    $("#buyTokenBtn").attr("disabled",false);
+                    $("#buyTokenAmount").val("");
+                }
+               status = false; 
+            });
+            
+        }
+    },
 
 }
 
@@ -361,6 +470,7 @@ $(function () {
     })
 
     $("#transferToken").on("click", App.transferToken);
+    $("#buyTokenBtn").click(()=>{App.buyToken();});
     //Transfer button click
     $("#enableTransfer").click(function () {
         $("#transferDiv").toggle(500);

@@ -1,61 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="css/mycss.css">
-    <title>DMT DEMO TOKEN</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+  <script src="js/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="css/mycss.css">
+  <title>DMT DEMO TOKEN</title>
 </head>
+
 <body>
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col-lg-12 text-center p-5 bg-dark">
-                    <h2 class="text-light">DMT DEMO TOKEN PAGE</h2>
-            </div>
-        </div>
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-lg-12 text-center p-5 bg-dark">
+        <h2 class="text-light">DMT DEMO TOKEN PAGE</h2>
+      </div>
     </div>
-    <!-- ---- -->
-    <!-- Get dmt button -->
-    <button class="btn-info btn-lg  buydmt" id="transfer" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy</button>
-
-    <div class="container" id="token">
-        <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="text-center mt-5" id="loading"><h4>Loading ...</h4></div>
-                <div id="page">
-                 <div class="text-center"><br><p><i>This is the official page of DMT Token and you can see token info here</i></p><hr></div>
-               
-                <button class="btn-primary btn w-25 text-light" disabled>Token Name</button> <button class="w-50 text-left bg-dark text-light" id="tokenName">Loading...</button>
-                <br><br>
-                <button class="btn-primary btn w-25 text-light" disabled>Symbol</button> <button class="w-50 text-left bg-dark text-light" id="tokenSymbol">Loading...</button>
-                <br><br>
-                <button class="btn-primary btn w-25 text-light" disabled>Total Supply</button> <button class="w-50 text-left bg-dark text-light" id="totalSupply">Loading...</button>
-                <br><br><hr>
-                <h2 class="text-center">Your Account info</h2>
-                <hr>
-                <button class="btn-primary btn w-25 text-light" disabled>You address</button> <span class=" text-left text-dark" id="yourAddress">Loading...</span><br><br>
-                <button class="btn-primary btn w-25 text-light" disabled>Balance</button> <span class="text-left  text-dark" id="yourBalance">Loading...</span><br><br>
-                <button class="btn-primary btn w-100 text-light" id="enableTransfer">Transfer</button>
-                <hr>
-                   <div class=" text-center" id="transferDiv">
-                   <label for=""></label>Enter Amount: <input type="number" id="amount" title="Invalid input" value="1" min="1" pattern="[0-9]" class="w-50 text-center"><br><br>
-                   <label for=""></label>Enter Address: <input type="text"  id="address" class="w-50 text-center" placeholder="0x85Cc672d0001Aa9d4aA75B05844bf2E313555Eb0">
-                   <div id="tranferError" class=""></div>
-                    <br><br><input type="submit" value="Submit" id="transferToken" class="btn btn-primary w-25">
-                   </div>
-                  
-                </div>
-            </div>
-            <div class="col-2"></div>
-        </div>
-    </div>
-
-    <!-- BUY TOKEN FORM -->
+  </div>
+  <!-- ---- -->
+  <!-- Get dmt button -->
+  <button class="btn-info btn-lg  buydmt" id="transfer" data-bs-toggle="modal"
+    data-bs-target="#exampleModal">Buy</button>
+  <!-- BUY TOKEN FORM -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -64,18 +33,67 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <input type="text" class="w-100 rounded" placeholder="Enter Quantity">
+          <input type="text" class="w-100 rounded" placeholder="Enter Quantity" id="buyTokenAmount">
+          <br>
+          <div id="buyTokenError"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel</button>
-          <button type="button" class="btn btn-primary">Buy</button>
+          <button type="button" class="btn btn-primary" id="buyTokenBtn">Buy</button>
         </div>
       </div>
     </div>
   </div>
 
-    <br><br>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+  <div class="container" id="token">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="text-center mt-5" id="loading">
+          <h4>Loading ...</h4>
+        </div>
+        <div id="page">
+          <div class="text-center"><br>
+            <p><i>This is the official page of DMT Token and you can see token info here</i></p>
+            <hr>
+          </div>
+          <hr>
+          <button class="btn-primary btn w-25 text-light" disabled>Token Name</button> <button
+            class="w-50 text-left bg-dark text-light" id="tokenName">Loading...</button>
+          <br><br>
+          <button class="btn-primary btn w-25 text-light" disabled>Symbol</button> <button
+            class="w-50 text-left bg-dark text-light" id="tokenSymbol">Loading...</button>
+          <br><br>
+          <button class="btn-primary btn w-25 text-light" disabled>Total Supply</button> <button
+            class="w-50 text-left bg-dark text-light" id="totalSupply">Loading...</button>
+          <br><br>
+          <hr>
+          <h2 class="text-center">Your Account info</h2>
+          <hr>
+          <button class="btn-primary btn w-25 text-light" disabled>You address</button> <span
+            class=" text-left text-dark" id="yourAddress">Loading...</span><br><br>
+          <button class="btn-primary btn w-25 text-light" disabled>Balance</button> <span class="text-left  text-dark"
+            id="yourBalance">Loading...</span><br><br>
+          <button class="btn-primary btn w-100 text-light" id="enableTransfer">Transfer</button>
+          
+          <hr>
+          <div class=" text-center" id="transferDiv">
+            <label for=""></label>Enter Amount: <input type="number" id="amount" title="Invalid input" value="1" min="1"
+              pattern="[0-9]" class="w-50 text-center"><br><br>
+            <label for=""></label>Enter Address: <input type="text" id="address" class="w-50 text-center"
+              placeholder="0x85Cc672d0001Aa9d4aA75B05844bf2E313555Eb0">
+            <div id="tranferError" class=""></div>
+            <br><br><input type="submit" value="Submit" id="transferToken" class="btn btn-primary w-25">
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </div>
+  <br><br>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
